@@ -72,26 +72,26 @@ class DB:
         else:
             return user
 
-    def update_user(self, user_id, **kwargs):
+    def update_user(self, user_id: int, **kwargs) -> None:
         """Update a user in the database
 
         Args:
-            user_id: the id of the user to update
-            **kwargs: key-value arguments for updating the user's attributes
-                    where the keys are the attributes' names and the values
-                    are their new values
-
+            user_id (int): the user's ID
+            **kwargs: keyword arguments corresponding to a user attribute
+        Returns:
+            None
         Raises:
-            ValueError: if an argument that does not correspond to a user
-            attribute is passed
-            NoResultFound: if no results are found
-            InvalidRequestError: if wrong query arguments are passed
+            ValueError: If a keyword argument that does not correspond to a
+            user attribute is passed
         """
         user = self.find_user_by(id=user_id)
-        for attr, value in kwargs.items():
-            if hasattr(user, attr):
-                setattr(user, attr, value)
-            else:
-                raise ValueError(f"Invalid parameter '{attr}'")
 
-        self._session.commit()
+        try:
+            for key, value in kwargs.items():
+                if key not in vars(User).keys():
+                    raise ValueError(f'{key} is not an attribute of user')
+                setattr(user, key, value)
+
+            self._session.commit()
+        except ValueError as e:
+            raise e
