@@ -1,13 +1,13 @@
-#!/usr/bin/env python 3
+#!/usr/bin/env python3
 """ flask app """
 from flask import Flask, jsonify
 
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET'])
-def message():
-    """ returns form payload """
+@app.route('/', methods=["GET"])
+def hello():
+    """ Base route """
     return jsonify({"message": "Bienvenue"})
 
 
