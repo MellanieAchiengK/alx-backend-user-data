@@ -1,16 +1,14 @@
 #!/usr/bin/env python 3
 """ flask app """
-from flask import Flask
-from flask import jsonify
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
 
-@app.route('/', methods=["GET"], strict_slashes=False)
+@app.route('/', methods=['GET'])
 def message():
     """ returns form payload """
-    response = jsonify({"message": "Bienvenue"})
-    return response
+    return jsonify({"message": "Bienvenue"})
 
 
 if __name__ == "__main__":
