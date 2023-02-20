@@ -31,7 +31,7 @@ class DB:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
         return self.__session
-    
+
     def add_user(self, email: str, hashed_password: str) -> User:
         """Add a user to the database
 
@@ -50,17 +50,15 @@ class DB:
 
         return new_user
 
-        
-
     def find_user_by(self, **kwargs) -> User:
         """Find user by arbitrary keyword arguments
-    
+
         Args:
             kwargs: any keyword arguments to filter the users
 
         Returns:
             a User object
-    
+
         Raises:
             NoResultFound: if no results are found
             InvalidRequestError: if wrong query arguments are passed
@@ -73,7 +71,7 @@ class DB:
             raise InvalidRequestError("Invalid query arguments were passed")
         else:
             return user
-    
+
     def update_user(self, user_id, **kwargs):
         """Update a user in the database
 
@@ -84,7 +82,8 @@ class DB:
                     are their new values
 
         Raises:
-            ValueError: if an argument that does not correspond to a user attribute is passed
+            ValueError: if an argument that does not correspond to a user
+            attribute is passed
             NoResultFound: if no results are found
             InvalidRequestError: if wrong query arguments are passed
         """
@@ -96,6 +95,3 @@ class DB:
                 raise ValueError(f"Invalid parameter '{attr}'")
 
         self._session.commit()
-
-
- 
