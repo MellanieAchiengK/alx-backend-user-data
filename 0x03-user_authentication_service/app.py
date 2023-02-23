@@ -14,15 +14,16 @@ def hello():
 
 
 @app.route('/users', methods=['POST'])
-def new_users():
-    email = request.form['email']
-    password = request.form['password']
+def users():
+    email = request.form.get('email')
+    password = request.form.get('password')
 
     try:
-        new_user = AUTH.register(email, password)
-        return jsonify({'email': new_user.email, 'message': 'User Created'})
-    except Exception as e:
-        return jsonify({'message': 'Email already registered'}), 400
+        user = AUTH.register(email, password)
+        return jsonify({'email': user.email, 'message': "user created"})
+
+    except ValueError:
+        return jsonify({'message': "email already registered"}), 400
 
 
 if __name__ == "__main__":
